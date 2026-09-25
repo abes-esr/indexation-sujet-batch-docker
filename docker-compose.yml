@@ -1,0 +1,42 @@
+#
+# Ci-dessous la config qui permet de lancer iar-batch-dump
+#
+# Remarque: avant de lancer docker-compose up, il faut régler le fichier .env
+# en partant du fichier .env-dist qui donne les variables d'environnements
+# à personnaliser et des exemples de valeurs.
+#
+
+
+services:
+
+
+  iar-batch-dump:
+    image: abesesr/iar:${IAR_BATCH_DUMP_VERSION}
+    container_name: iar-batch-dump
+    restart: unless-stopped
+    mem_limit: ${MEM_LIMIT}
+    memswap_limit: ${MEM_LIMIT}
+    cpus: ${CPU_LIMIT}
+    environment:   
+      IAR_BATCH_SPRING_PROFILES_ACTIVE: ${IAR_BATCH_SPRING_PROFILES_ACTIVE}
+      IAR_BATCH_JAVA_TOOL_OPTIONS: ${IAR_BATCH_JAVA_TOOL_OPTIONS}
+      IAR_BATCH_OUTPUT_DIR: ${IAR_BATCH_OUTPUT_DIR}
+      IAR_BATCH_UPLOAD_URL: ${IAR_BATCH_UPLOAD_URL}
+      IAR_BATCH_VECTORIZATION_URL: ${IAR_BATCH_VECTORIZATION_URL}
+      IAR_BATCH_CHUNK_SIZE: ${IAR_BATCH_CHUNK_SIZE}
+      IAR_BATCH_SOURCE_TABLE: ${IAR_BATCH_SOURCE_TABLE}
+      IAR_BATCH_TEST_OUTPUT_DIR: ${IAR_BATCH_TEST_OUTPUT_DIR}
+      ORACLE_HOST: ${ORACLE_HOST}
+      ORACLE_PORT: ${ORACLE_PORT}
+      ORACLE_SERVICE: ${ORACLE_SERVICE}
+      ORACLE_USER: ${ORACLE_USER}
+      ORACLE_PASSWORD: ${ORACLE_PASSWORD}    
+    labels:
+      # pour envoyer les logs dans le puits de log de l'abes
+      - "co.elastic.logs/enabled=true"
+      - "co.elastic.logs/processors.add_fields.target="
+      - "co.elastic.logs/processors.add_fields.fields.abes_appli=iar"
+      - "co.elastic.logs/processors.add_fields.fields.abes_middleware=java-spring"
+      # pour que les mises à jour de cette image soient auto-déployées par wud
+      - "wud.watch=true"
+      - "wud.watch.digest=true"
