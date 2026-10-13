@@ -1,6 +1,6 @@
 # indexation-sujet-batch-docker
 
-Configuration docker 🐳 pour déployer le batch **indexation-sujet-batch-dump** de l'application **indexation-sujet** (IA Rameau). Ce README fait également office de fiche d'exploitation.
+Configuration docker 🐳 pour déployer le batch **indexation-sujet-batch** de l'application **indexation-sujet** (IA Rameau). Ce README fait également office de fiche d'exploitation.
 
 ## Prérequis
 
@@ -110,13 +110,13 @@ docker compose up -d
 
 ## Déploiement continu
 
-Les objectifs des déploiements continus de indexation-sujet-batch-dump sont les suivants (cf. [poldev](https://github.com/abes-esr/abes-politique-developpement/blob/main/01-Gestion%20du%20code%20source.md#utilisation-des-branches)) :
+Les objectifs des déploiements continus de indexation-sujet-batch sont les suivants (cf. [poldev](https://github.com/abes-esr/abes-politique-developpement/blob/main/01-Gestion%20du%20code%20source.md#utilisation-des-branches)) :
 
 - Un `git push` sur la branche `develop` provoque un déploiement automatique sur le serveur de développement (`dev`).
 - Un `git push` (ou merge) sur la branche `main` provoque un déploiement automatique sur le serveur de test (`test`).
 - Un `git tag X.X.X` (associé à une release) sur la branche `main` permet un déploiement sur le serveur de production (`prod`).
 
-indexation-sujet-batch-dump s'appuie sur **WUD (What's Up Docker?)** pour la surveillance et la mise à jour automatique des conteneurs via les labels Docker configurés dans [docker-compose.yml](./docker-compose.yml) :
+indexation-sujet-batch s'appuie sur **WUD (What's Up Docker?)** pour la surveillance et la mise à jour automatique des conteneurs via les labels Docker configurés dans [docker-compose.yml](./docker-compose.yml) :
 
 ```yaml
 labels:
@@ -124,7 +124,7 @@ labels:
   - "wud.watch.digest=true"
 ```
 
-Le fonctionnement de WUD consiste à surveiller régulièrement la publication de nouvelles versions d'images sur Docker Hub pour `indexation-sujet-batch-dump`. Lorsqu'une nouvelle image est détectée pour le tag ou le digest suivi, WUD la télécharge, arrête l'ancien conteneur et recrée le nouveau conteneur avec les mêmes paramètres d'environnement.
+Le fonctionnement de WUD consiste à surveiller régulièrement la publication de nouvelles versions d'images sur Docker Hub pour `indexation-sujet-batch`. Lorsqu'une nouvelle image est détectée pour le tag ou le digest suivi, WUD la télécharge, arrête l'ancien conteneur et recrée le nouveau conteneur avec les mêmes paramètres d'environnement.
 
 Pour le développeur, il suffit de pousser son code (ex: sur `develop`), d'attendre la complétion de la GitHub Action qui compile et publie l'image sur Docker Hub, puis WUD met à jour le service automatiquement.
 
@@ -143,12 +143,12 @@ Le `pull` téléchargera la dernière image disponible correspondant à la versi
 
 Le service orchestré par Docker Compose :
 
-- **indexation-sujet-batch-dump** : Application Java Spring Boot chargée de l'extraction et du traitement batch des données RAMEAU.
+- **indexation-sujet-batch** : Application Java Spring Boot chargée de l'extraction et du traitement batch des données RAMEAU.
 
 ### Dépôts sources et images Docker
 
-Les images Docker de indexation-sujet-batch-dump sont issues des dépôts GitHub de l'organisation [abes-esr](https://github.com/abes-esr) :
+Les images Docker de indexation-sujet-batch sont issues des dépôts GitHub de l'organisation [abes-esr](https://github.com/abes-esr) :
 
-- [abes-esr/indexation-sujet-batch-dump](https://github.com/abes-esr/indexation-sujet-batch-dump) : Code source du batch Java Spring Boot
+- [abes-esr/indexation-sujet-batch](https://github.com/abes-esr/indexation-sujet-batch) : Code source du batch Java Spring Boot
 - [abes-esr/indexation-sujet-batch-docker](https://github.com/abes-esr/indexation-sujet-batch-docker) : Configuration Docker Compose de déploiement
 - Images publiées sur Docker Hub : [abesesr/indexation-sujet](https://hub.docker.com/r/abesesr/indexation-sujet)

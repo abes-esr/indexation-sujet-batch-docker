@@ -1,5 +1,5 @@
 #
-# Ci-dessous la config qui permet de lancer indexation-sujet-batch-dump
+# Ci-dessous la config qui permet de lancer indexation-sujet-batch
 #
 # Remarque: avant de lancer docker-compose up, il faut régler le fichier .env
 # en partant du fichier .env-dist qui donne les variables d'environnements
@@ -8,9 +8,9 @@
 
 services:
 
-indexation-sujet-batch-dump:
+indexation-sujet-batch:
     image: abesesr/indexation-sujet:${INDEXATION_SUJET_BATCH_DUMP_VERSION}
-    container_name: indexation-sujet-batch-dump
+    container_name: indexation-sujet-batch
     restart: unless-stopped
     mem_limit: ${MEM_LIMIT}
     memswap_limit: ${MEM_LIMIT}
