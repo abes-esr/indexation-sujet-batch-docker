@@ -52,3 +52,5 @@ services:
       # pour que les mises à jour de cette image soient auto-déployées par wud
       - "wud.watch=true"
       - "wud.watch.digest=true"
+    volumes: 
+      - ./volumes:/data/
